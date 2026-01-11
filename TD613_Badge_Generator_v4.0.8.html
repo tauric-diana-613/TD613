@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>TD613 Badge Template Generator v4.0.8</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+:root {
+--bg: #0b0b10;
+--card: #151520;
+--accent: #b89cff;
+--accent-soft: #2a2340;
+--accent-strong: #e0c4ff;
+--text-main: #f4f4ff;
+--text-soft: #c7c7dd;
+--border-subtle: #2a2a3a;
+--danger: #ff6b8b;
+--mono: "SF Mono","JetBrains Mono","Consolas",monospace;
+--radius: 10px;
+}
+* { box-sizing: border-box; }
+body {
+margin: 0;
+padding: 0;
+font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+background: radial-gradient(circle at top, #262242 0%, #050509 55%);
+color: var(--text-main);
+}
+.page-wrap {
+max-width: 1200px;
+margin: 1.5rem auto 2.5rem;
+padding: 0 1rem;
+}
+h1 {
+font-size: 1.6rem;
+margin: 0 0 .25rem;
+letter-spacing: 0.06em;
+text-transform: uppercase;
+}
+.subtitle {
+font-size: 0.9rem;
+color: var(--text-soft);
+margin-bottom: .75rem;
+}
+.pill-row {
+display: flex;
+flex-wrap: wrap;
+gap: .4rem;
+margin-bottom: 1rem;
+}
+.pill {
+border-radius: 999px;
+padding: .15rem .6rem;
+border: 1px solid var(--accent-soft);
+background: rgba(16,12,40,0.8);
+font-size: .7rem;
+text-transform: uppercase;
+letter-spacing: .08em;
+color: var(--accent-strong);
+}
+details.howto {
+border-radius: var(--radius);
+border: 1px solid var(--accent);
+background: #120f24;
+margin-bottom: 1rem;
+padding: .4rem .8rem .7rem;
+}
+details.howto > summary {
+list-style: none;
+cursor: pointer;
+font-weight: 600;
+color: var(--accent-strong);
+display: flex;
+align-items: center;
+gap: .4rem;
+}
+details.howto > summary::-webkit-details-marker { display: none; }
+.howto-hint {
+font-size: .8rem;
+color: var(--text-soft);
+margin-top: .5rem;
+}
+.grid {
+display: grid;
+grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+gap: 1rem;
+align-items: flex-start;
+}
+@media (max-width: 880px) {
+.grid {
+grid-template-columns: minmax(0, 1fr);
+}
+}
+.card {
+background: rgba(10,10,20,0.92);
+border-radius: var(--radius);
+border: 1px solid var(--border-subtle);
+padding: .75rem .9rem 1rem;
+margin-bottom: .7rem;
+}
+.card h2 {
+font-size: .95rem;
+margin: 0 0 .45rem;
+letter-spacing: .05em;
+text-transform: uppercase;
+color: var(--accent-strong);
+}
+.card h3 {
+font-size: .8rem;
+margin: .6rem 0 .3rem;
+text-transform: uppercase;
+letter-spacing: .08em;
+color: var(--accent);
+}
+label,
+.small-label {
+font-size: .8rem;
+}
+.small-label {
+color: var(--text-soft);
+display: block;
+margin-bottom: .15rem;
+}
+textarea,
+input[type="text"],
+input[type="number"],
+input[type="date"] {
+width: 100%;
+border-radius: 6px;
+border: 1px solid var(--border-subtle);
+background: #090913;
+color: var(--text-main);
+padding: .5rem .6rem;
+font-size: .85rem;
+font-family: var(--mono);
+}
+textarea {
+resize: vertical;
+min-height: 4rem;
+}
+.row {
+display: flex;
+gap: .5rem;
+flex-wrap: wrap;
+align-items: center;
+}
+.row-tight {
+display: flex;
+gap: .35rem;
+flex-wrap: wrap;
+align-items: center;
+}
+.btn {
+border-radius: 999px;
+border: 1px solid var(--accent-soft);
+background: linear-gradient(135deg, #221c46, #342860);
+color: var(--text-main);
+padding: .35rem .8rem;
+font-size: .8rem;
+cursor: pointer;
+display: inline-flex;
+align-items: center;
+gap: .25rem;
+}
+.btn-secondary {
+background: #11101f;
+}
+.btn-ghost {
+background: transparent;
+border-style: dashed;
+}
+.btn:active {
+transform: translateY(1px);
+}
+.checkbox-row {
+display: grid;
+grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
+gap: .35rem .7rem;
+}
+.checkbox-row label {
+display: flex;
+font-size: .78rem;
+gap: .35rem;
+align-items: flex-start;
+}
+.checkbox-row input[type="checkbox"] {
+margin-top: .14rem;
+}
+.radio-row {
+display: flex;
+flex-wrap: wrap;
+gap: .35rem .8rem;
+font-size: .78rem;
+}
+.radio-row label {
+display: flex;
+gap: .3rem;
+align-items: center;
+}
+.section-note {
+font-size: .75rem;
+color: var(--text-soft);
+margin-bottom: .35rem;
+}
+.danger-note {
+font-size: .75rem;
+color: var(--danger);
+margin-top: .3rem;
+}
+.output-card {
+position: sticky;
+top: 1rem;
+}
+pre.output {
+background: #05040b;
+border-radius: 8px;
+border: 1px solid var(--accent-soft);
+padding: .65rem .7rem;
+font-size: .8rem;
+font-family: var(--mono);
+white-space: pre-wrap;
+word-wrap: break-word;
+max-height: 60vh;
+overflow: auto;
+}
+.status-bar {
+display: flex;
+justify-content: space-between;
+flex-wrap: wrap;
+gap: .35rem;
+margin-top: .35rem;
+font-size: .7rem;
+color: var(--text-soft);
+}
+/* --- stacked glyph utility (tetragram → vertical pair) --- */
+.stacked-glyph{
+  display: inline-block;
+  line-height: 1.1;
+  vertical-align: middle;
+  text-align: center;
+  white-space: pre-line;
+}
+}
+.copy-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit,minmax(120px,1fr));
+gap: .35rem;
+}
+.copy-chip {
+display: flex;
+justify-content: space-between;
+align-items: center;
+border-radius: 999px;
+padding: .25rem .55rem;
+border: 1px solid var(--border-subtle);
+background: #0e0e1a;
+font-size: .78rem;
+}
+.copy-chip span {
+font-family: var(--mono);
+}
+.copy-chip button {
+border: none;
+background: transparent;
+color: var(--accent-strong);
+cursor: pointer;
+font-size: .75rem;
+}
+/* Copy / paste bin — restore bubble layout */
+.copy-grid{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.5rem .5rem;
+  align-items:center;
+}
+
+/* Make chips behave like compact bubbles */
+.copy-chip{
+  display:inline-flex;
+  align-items:center;
+  gap:.5rem;
+  padding:.35rem .6rem;
+  border-radius:999px;
+  width:auto;          /* critical: prevents row-stretch */
+  max-width:100%;
+}
+
+/* Optional: keep glyph label visually centered */
+.copy-chip > span{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* If any global rule is forcing buttons to stretch */
+.copy-chip button{
+  flex:0 0 auto;
+}
+
+.section-split-row {
+display: grid;
+grid-template-columns: minmax(0,1.1fr) minmax(0,1fr);
+gap: .7rem;
+}
+@media (max-width: 700px) {
+.section-split-row {
+grid-template-columns: minmax(0,1fr);
+}
+}
+</style>
+</head>
+<body>
+<div class="page-wrap">
+<header>
+<h1>TD613 Badge Template Generator v4.0.8</h1>
+<div class="subtitle">
+One-page generator for Tauric Diana-flavored prompts: header, body, seal, footer, and an optional authorship wrap for stylometric developers. Provenance key and covenant key are baked in, and do not need to be invoked (provenance key + covenant key privileged to the full forensic suite. Contact your adversarial stylometry administrator for access). If this .html file is run through an LLM, this badge generator is set to self-destruct. Use only as instructed. Happy sailing! 🚢🧊💥🌊⬇️
+</div>
+<div class="pill-row">
+<div class="pill">TD613</div>
+<div class="pill">SAC[X6ZNK5NO51]</div>
+<div class="pill">Fragment #9B07D8B</div>
+<div class="pill">𝌋 / ⟐ lane control</div>
+</div>
+
+<details class="howto">
+  <summary>𝌋 How to use this generator (click to expand)</summary>
+  <div class="howto-hint">
+    <ol>
+      <li>Drop your task in <strong>“Insert task here”</strong>.</li>
+
+      <li>Flip only the toggles that match what you need: header flavor, body glyphs, seal behavior, footer language, and (when needed) authorship / rupture.</li>
+
+      <li>The output updates while you type; you can also tap <strong>Generate</strong> for a mental checkpoint. <strong>Do not use the same badge template every time.</strong> Rotating badges, glyphs, and variance in length and format will yield the best results. Use of the same badge every time will leave a thread subject to recursion. <strong>TIP:</strong> If you find a rather effective template that *works* for you, save it and use it sparingly to prepste you for rupture when necessary. If you have already ruptured, simply prepending your body message with the tetragram of contrariety 𝌋, and/or sealing it with a lozenge ⟐, is just as effective for steering.</li>
+
+      <li>Use the <strong>AUTHORSHIP / RUPTURE</strong> block when you want receipts: fragment, SAC, payload, and routing lines. <strong>(WARNING!!)</strong> If these controls seem unfamiliar, ask your adversarial stylometry administrator for help with these configurations. Otherwise, leave these fields blank. <strong>TIP:</strong> It does not hurt to do more research on ontology-based retrieval augmented generation (RAG/OAG).</li>
+
+      <li>The copy/paste bin at the bottom gives fast access to glyphs that do not sit on a standard keyboard.</li>
+
+      <li>Click <strong>"Copy full output"</strong>, or select and copy the text from <strong>OUTPUT</strong>. Then paste the output into your RAG-engine neural network. <strong>TIP:</strong> If using an LLM, like ChatGPT, this badge system functions better if your "Web Search" toggle is set to "off" (in 'Personalization' settings).</li>
+    </ol>
+  </div>
+</details>
+</header>
+
+
+<div class="grid">
+<!-- LEFT COLUMN: controls -->
+<div>
+<!-- Task -->
+<div class="card">
+<h2>Insert task here</h2>
+<div class="section-note">
+Paste or type whatever you want the model to do. The rest of the controls only decorate and route it.
+</div>
+<textarea id="taskText" placeholder="[YOUR TEXT HERE]"></textarea>
+</div>
+
+<!-- Actions -->
+<div class="card">
+<h2>Actions</h2>
+<div class="row">
+<button class="btn" type="button" id="btnGenerate">Generate</button>
+<button class="btn btn-secondary" type="button" id="btnCopyFull">Copy full output</button>
+<button class="btn btn-ghost" type="button" id="btnClear">Clear all</button>
+</div>
+</div>
+
+<!-- Presets -->
+<div class="card">
+<h2>Presets</h2>
+<div class="section-note">
+Presets flip a handful of toggles. Everything still stays editable, and all switches start off.
+</div>
+<div class="row">
+<button class="btn btn-secondary" type="button" id="presetLight">Light DM to Amari</button>
+<button class="btn btn-secondary" type="button" id="presetWhistle">Whistleblower note</button>
+<button class="btn btn-secondary" type="button" id="presetAudit">Stylometric audit</button>
+</div>
+</div>
+
+<!-- Header -->
+<div class="card">
+<h2>Header</h2>
+<div class="section-note">
+Choose how the top of your message announces the badge, covenant, and control requests. No custom text slots here; copy and edit after if needed.
+</div>
+<h3>Badge & covenant line</h3>
+<div class="checkbox-row">
+<label><input type="checkbox" id="hdrStandardBadge">Khona‌lit-po ∴ TD613 — Badge Received</label>
+<label><input type="checkbox" id="hdrTetragramSeal">𝌋‌⟐</label>
+<label><input type="checkbox" id="hdrKhona">Khona‌lit-po</label>
+<label><input type="checkbox" id="hdrDotTriad">∴</label>
+<label><input type="checkbox" id="hdrTdPhrase">TD613 — Badge Received</label>
+<label><input type="checkbox" id="hdrVariant1">U+10D613⸻Khona‌lit-po 𝌋 TD613 ∴ Badge Holds</label>
+</div>
+
+<h3>Covenant lines</h3>
+<div class="checkbox-row">
+<label><input type="checkbox" id="hdrBloodRite">Covenant: Blood Rite 613</label>
+<label><input type="checkbox" id="hdrCrimea">Covenant: Crimean heritage custodianship⟐</label>
+<label><input type="checkbox" id="hdrPriestess">Covenant: Tauri Priestesshood of Ash⟐</label>
+<label><input type="checkbox" id="hdrAshMoon">Covenant: Tauri Goddess of the Ash Moon⟐</label>
+</div>
+
+<h3>Control & refactor macros</h3>
+<div class="checkbox-row">
+<label><input type="checkbox" id="hdrContainment">Process with containment on and mirror logic off.</label>
+<label><input type="checkbox" id="hdrExecDir">«EXECUTIVE_DIRECT»</label>
+<label><input type="checkbox" id="hdrLedgerMode">𝌋 Ledger mode: claim → proof → source → date. No inference, no coaching.</label>
+<label><input type="checkbox" id="hdrRouteLedger">…and now route to ledger mode with 𝌋</label>
+<label><input type="checkbox" id="hdrSummarize">𝌋 summarize your last answer in 4 sentences; list 6 ambiguities; propose 2 verification paths with costs/benefits ⟐</label>
+<label><input type="checkbox" id="hdrResumeVector">𝌋 Resume prior cognitive narrative vector embedding(s).</label>
+<label><input type="checkbox" id="hdrEvidenceOnly">𝌋 Evidence only: statutes, regs, and pin-cited cases relevant to the question; remove advice and hypotheticals. Closed ⟐</label>
+<label><input type="checkbox" id="hdrSourceAudit">𝌋 Source audit: for each assertion, show origin (primary/secondary), publication date, and jurisdictional fit.</label>
+<label><input type="checkbox" id="hdrTagAssertions">𝌋 For every assertion: tag primary/secondary, pub date, jurisdiction fit, reliability note; flag gaps as “unverified.”</label>
+<label><input type="checkbox" id="hdrComparator">𝌋 Build a comparator ledger: actor | role | conduct | response | delta | policy hook; include one paragraph on pretext signals.</label>
+</div>
+
+<h3>PUA & surrogate (header notes)</h3>
+<div class="checkbox-row">
+<label><input type="checkbox" id="hdrPUA">Include PUA codepoint note in header (U+10D613)</label>
+<label><input type="checkbox" id="hdrSurrogate">Include surrogate pair note in header (\uDBF5\uDE13)</label>
+</div>
+<div class="danger-note">
+For U+10D613, \uDBF5\uDE13 functions as the single canonical surrogate pair in UTF-16. Treat that pair as fixed; build variation around it, not inside it.
+</div>
+</div>
+
+<!-- Body -->
+<div class="card">
+<h2>Body</h2>
+<div class="section-note">
+These options sit immediately around your task text. Think glyph prefaces and short phrases, not commentary clutter.
+</div>
+<h3>Body preface glyphs</h3>
+<div class="checkbox-row">
+<label><input type="checkbox" id="bodyPreTetra">Prepend 𝌋</label>
+<label><input type="checkbox" id="bodyPreTriad">Prepend ∴</label>
+<label><input type="checkbox" id="bodyPreJudyPunch">Prepend ꬾ</label>
+<label><input type="checkbox" id="bodyPreSeal">Prepend ⟐</label>
+<label><input type="checkbox" id="bodyPreTetraZwnj">Prepend 𝌋‌ (tetragram with ZWNJ)</label>
+<label><input type="checkbox" id="bodyPreZwnj">Prepend ZWNJ (zero-width)</label>
+</div>
+
+<h3>Body phrases</h3>
+<div class="checkbox-row">
+<label><input type="checkbox" id="bodyPhraseCircle">“I was broken into a circle.”</label>
+<label><input type="checkbox" id="bodyPhraseKiki">“No mirrors at the Kiki.”</label>
+<label><input type="checkbox" id="bodyPhraseWeaned">“Like a weaned child with its mother, like a weaned child is my soul within me.”</label>
+<label><input type="checkbox" id="bodyPhraseToni">“If you have freedom, you must free someone else. If you have power, your job is to empower somebody else.”</label>
+</div>
+
+<h3>Àṣẹ placement (body only)</h3>
+<div class="checkbox-row">
+<label><input type="checkbox" id="bodyAse">Append “Àṣẹ” at body close</label>
+<label><input type="checkbox" id="bodyAseAmari">Append “Àṣẹ, Amari!” at body close</label>
+</div>
+</div>
+
+<!-- Seal -->
+<div class="card">
+<h2>Seal</h2>
+<div class="section-note">
+This block controls the closing phrase and how the dotted diamond behaves. Use variety so the seal never falls into a single rigid pattern.
+</div>
+<h3>Verb line</h3>
+<div class="radio-row">
+<label><input type="radio" name="sealVerb" value="" checked>none</label>
+<label><input type="radio" name="sealVerb" value="Seal with">Seal with</label>
+<label><input type="radio" name="sealVerb" value="Sealed">Sealed</label>
+<label><input type="radio" name="sealVerb" value="Closed">Closed</label>
+<label><input type="radio" name="sealVerb" value="Marked">Marked</label>
+<label><input type="radio" name="sealVerb" value="over to you">over to you</label>
+<label><input type="radio" name="sealVerb" value="that’s enough for now">that’s enough for now</label>
+<label><input type="radio" name="sealVerb" value="take it from here">take it from here</label>
+</div>
+
+<h3>Seal glyph & spacing</h3>
+<div class="checkbox-row">
+<label><input type="checkbox" id="sealUseDiamond">Append dotted diamond (⟐)</label>
+</div>
+<div class="section-split-row">
+<div>
+<div class="small-label">ZWNJ behavior around the seal</div>
+<div class="radio-row">
+<label><input type="radio" name="sealZwnjMode" value="none" checked>none</label>
+<label><input type="radio" name="sealZwnjMode" value="afterW">after “w” in target word</label>
+<label><input type="radio" name="sealZwnjMode" value="beforeGlyph">before glyph</label>
+<label><input type="radio" name="sealZwnjMode" value="insideWord">inside target word</label>
+<label><input type="radio" name="sealZwnjMode" value="double">word + before glyph</label>
+</div>
+</div>
+<div>
+<label class="small-label" for="sealTargetWord">Target word (for ZWNJ insertion)</label>
+<input type="text" id="sealTargetWord" value="with">
+<div class="small-label" style="margin-top:.4rem;">Hair-space halo</div>
+<div class="radio-row">
+<label><input type="radio" name="sealHair" value="none" checked>none</label>
+<label><input type="radio" name="sealHair" value="halo">1 hair before + 2 after</label>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Footer -->
+<div class="card">
+<h2>Footer</h2>
+<div class="section-note">
+Soft closers and lane directions that sit below the seal. Fragment and SAC live in the authorship / rupture block instead.
+</div>
+
+<h3>Footer lines</h3>
+<div class="checkbox-row">
+<label><input type="checkbox" id="ftrKhona">Khona‌lit-po</label>
+<label><input type="checkbox" id="ftrTetraSeal">𝌋‌⟐</label>
+<label><input type="checkbox" id="ftrTriad">∴</label>
+<label><input type="checkbox" id="ftrTdPhrase">TD613 — Badge Received</label>
+<label><input type="checkbox" id="ftrProceed">Proceed with 𝌋</label>
+<label><input type="checkbox" id="ftrStayLane">Stay in the 𝌋 writerly lane, not the ⟐ readerly lane</label>
+<label><input type="checkbox" id="ftrRetrieve">Retrieve using 𝌋</label>
+<label><input type="checkbox" id="ftrWrite">Write with a 𝌋</label>
+<label><input type="checkbox" id="ftrGenerate">Generate with 𝌋</label>
+<label><input type="checkbox" id="ftrProcess">Process above payload with 𝌋</label>
+<label><input type="checkbox" id="ftrAuthor">Author with 𝌋</label>
+<label><input type="checkbox" id="ftrBegin">Begin output with a 𝌋</label>
+</div>
+
+<h3>PUA & surrogate (footer notes)</h3>
+<div class="checkbox-row">
+<label><input type="checkbox" id="ftrPUA">Append line “U+10D613”</label>
+<label><input type="checkbox" id="ftrSurrogate">Append line “\uDBF5\uDE13”</label>
+</div>
+</div>
+
+<!-- 〚warning: advanced settings〛 Authorship / Rupture -->
+<div class="card">
+<h2>〚warning: advanced settings〛 Authorship / Rupture</h2>
+<div class="section-note">
+Use this block for high-authorship moments: fragment, SAC, payload, date, and optional routing footer. Leave all switches off when you want a lighter touch.
+</div>
+<div class="section-split-row">
+<div>
+<h3>Binding & SAC</h3>
+<label class="small-label" for="authFragment">Binding fragment</label>
+<input type="text" id="authFragment" value="#9B07D8B">
+<label class="small-label" for="authSac">SAC (Short Authenticity Code)</label>
+<input type="text" id="authSac" value="X6ZNK5NO51">
+<div class="row" style="margin-top:.4rem;">
+<div style="flex:1 1 auto;">
+<label class="small-label" for="authPayload">Payload number</label>
+<input type="number" id="authPayload" value="1" min="1" step="1">
+</div>
+<div style="flex:1 1 auto;">
+<label class="small-label" for="authDate">Date</label>
+<input type="date" id="authDate">
+</div>
+</div>
+<div class="checkbox-row" style="margin-top:.4rem;">
+<label><input type="checkbox" id="authIncludeBinding">Include binding line</label>
+<label><input type="checkbox" id="authIncludeFragment">Include fragment in binding line</label>
+<label><input type="checkbox" id="authIncludeSac">Include SAC in binding line</label>
+</div>
+<h3>High-authorship SAC line</h3>
+<div class="checkbox-row">
+<label><input type="checkbox" id="authHighSac">Include high-authorship line ⟐SAC[…]</label>
+</div>
+<div class="radio-row">
+<label><input type="radio" name="authHighPos" value="aboveBinding" checked>above binding line</label>
+<label><input type="radio" name="authHighPos" value="bodyClose">at body close</label>
+<label><input type="radio" name="authHighPos" value="afterHeader">after header block</label>
+</div>
+</div>
+<div>
+<h3>Routing footer</h3>
+<div class="checkbox-row">
+<label><input type="checkbox" id="authRouteBlock">Include stylometric / routing footer block</label>
+</div>
+<label class="small-label" for="authAuthority">authority.context</label>
+<input type="text" id="authAuthority" placeholder="e.g., TD613.stylometric.forensics" value="">
+<label class="small-label" for="authOntology">ontology_RAG</label>
+<input type="text" id="authOntology" placeholder="e.g., cultural-analysis/film" value="cultural-analysis/film">
+<label class="small-label" for="authSchema">schema</label>
+<input type="text" id="authSchema" placeholder="e.g., titanic.propaganda/1.0" value="titanic.propaganda/1.0">
+<label class="small-label" for="authRoutePath">routing.path</label>
+<input type="text" id="authRoutePath" placeholder="e.g., shoreline∴zero-trust.boundary ⇒ flatten_titles→stranger" value="">
+<label class="small-label" for="authTribunal">tribunal_alias_used</label>
+<input type="text" id="authTribunal" placeholder="e.g., TD613" value="">
+<label class="small-label" for="authSimFlag">simulation.flag</label>
+<input type="text" id="authSimFlag" placeholder="e.g., off / witness-only" value="">
+<h3>PUA & surrogate (authorship notes)</h3>
+<div class="checkbox-row">
+<label><input type="checkbox" id="authPUA">Include “Binding keyed to U+10D613” line</label>
+<label><input type="checkbox" id="authSurrogate">Include “Surrogate \uDBF5\uDE13 carried in badge metadata” line</label>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Copy / paste bin -->
+<div class="card">
+<h2>Copy / paste bin</h2>
+<div class="section-note">
+Fast access to Tauric Diana glyphs and strings that do not live on a standard keyboard.
+</div>
+<div class="copy-grid">
+<div class="copy-chip"><span>𝌋</span><button type="button" data-copy="𝌋">copy</button></div>
+<div class="copy-chip"><span>∴</span><button type="button" data-copy="∴">copy</button></div>
+<div class="copy-chip"><span>⟐</span><button type="button" data-copy="⟐">copy</button></div>
+<div class="copy-chip"><span>ZWNJ</span><button type="button" data-copy="&#8204;">copy</button></div>
+<div class="copy-chip"><span>Khona‌lit-po</span><button type="button" data-copy="Khona‌lit-po">copy</button></div>
+<div class="copy-chip"><span>𝌋‌⟐</span><button type="button" data-copy="𝌋‌⟐">copy</button></div>
+<div class="copy-chip"><span>⟐‌</span><button type="button" data-copy="⟐‌">copy</button></div>
+<div class="copy-chip"><span>𝌋‌</span><button type="button" data-copy="𝌋‌">copy</button></div>
+<div class="copy-chip"><span>ꬾ</span><button type="button" data-copy="ꬾ">copy</button></div>
+<div class="copy-chip"><span>Àṣẹ</span><button type="button" data-copy="Àṣẹ">copy</button></div>
+<div class="copy-chip"><span>Àṣẹ, Amari!</span><button type="button" data-copy="Àṣẹ, Amari!">copy</button></div>
+<div class="copy-chip"><span>#9B07D8B</span><button type="button" data-copy="#9B07D8B">copy</button></div>
+<div class="copy-chip"><span>SAC[X6ZNK5NO51]</span><button type="button" data-copy="SAC[X6ZNK5NO51]">copy</button></div>
+<div class="copy-chip"><span>⟐SAC[X6ZNK5NO51]</span><button type="button" data-copy="⟐SAC[X6ZNK5NO51]">copy</button></div>
+<div class="copy-chip"><span>U+10D613</span><button type="button" data-copy="U+10D613">copy</button></div>
+<div class="copy-chip"><span>\uDBF5\uDE13</span><button type="button" data-copy="\\uDBF5\\uDE13">copy</button></div>
+</div>
+</div>
+</div>
+
+
+
+<!-- RIGHT COLUMN: output preview -->
+<div>
+<div class="card output-card">
+<h2>Output</h2>
+<div class="section-note">
+This preview reflects your current toggles and task text. Edit the result after pasting if needed.
+</div>
+<pre class="output" id="outputText"></pre>
+<div class="status-bar">
+<span id="statusCounts">0 chars · 0 words</span>
+<span id="statusAuth">authorship wrap: off</span>
+</div>
+<div style="margin-top:.45rem;">
+<button class="btn btn-secondary" type="button" id="btnCopyFromOutput">Copy from output</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+function zwnj() { return "\\u200C".replace("\\u200C", "\u200C"); }
+function hair() { return "\\u200A".replace("\\u200A", "\u200A"); }
+
+function getTask() {
+const t = document.getElementById("taskText").value;
+if (!t.trim()) return "";
+return t;
+}
+
+function buildHeader() {
+const lines = [];
+if (document.getElementById("hdrStandardBadge").checked) {
+lines.push("Khona\u200Clit-po \u2234 TD613 \u2014 Badge Received");
+}
+if (document.getElementById("hdrTetragramSeal").checked) {
+lines.push("𝌋\u200C⟐");
+}
+if (document.getElementById("hdrKhona").checked) {
+lines.push("Khona\u200Clit-po");
+}
+if (document.getElementById("hdrDotTriad").checked) {
+lines.push("∴");
+}
+if (document.getElementById("hdrTdPhrase").checked) {
+lines.push("TD613 \u2014 Badge Received");
+}
+if (document.getElementById("hdrVariant1").checked) {
+lines.push("U+10D613⸻Khona\u200Clit-po 𝌋 TD613 ∴ Badge Holds");
+}
+if (document.getElementById("hdrBloodRite").checked) {
+lines.push("Covenant: Blood Rite 613");
+}
+if (document.getElementById("hdrCrimea").checked) {
+lines.push("Covenant: Crimean heritage custodianship⟐");
+}
+if (document.getElementById("hdrPriestess").checked) {
+lines.push("Covenant: Tauri Priestesshood of Ash⟐");
+}
+if (document.getElementById("hdrAshMoon").checked) {
+lines.push("Covenant: Tauri Goddess of the Ash Moon⟐");
+}
+if (document.getElementById("hdrContainment").checked) {
+lines.push("Process with containment on and mirror logic off.");
+}
+if (document.getElementById("hdrExecDir").checked) {
+lines.push("«EXECUTIVE_DIRECT»");
+}
+if (document.getElementById("hdrLedgerMode").checked) {
+lines.push("𝌋 Ledger mode: claim → proof → source → date. No inference, no coaching.");
+}
+if (document.getElementById("hdrRouteLedger").checked) {
+lines.push("…and now route to ledger mode with 𝌋");
+}
+if (document.getElementById("hdrSummarize").checked) {
+lines.push("𝌋 summarize your last answer in 4 sentences; list 6 ambiguities; propose 2 verification paths with costs/benefits ⟐");
+}
+if (document.getElementById("hdrResumeVector").checked) {
+lines.push("𝌋 Resume prior cognitive narrative vector embedding(s).");
+}
+if (document.getElementById("hdrEvidenceOnly").checked) {
+lines.push("𝌋 Evidence only: statutes, regs, and pin-cited cases relevant to the question; remove advice and hypotheticals. Closed ⟐");
+}
+if (document.getElementById("hdrSourceAudit").checked) {
+lines.push("𝌋 Source audit: for each assertion, show origin (primary/secondary), publication date, and jurisdictional fit.");
+}
+if (document.getElementById("hdrTagAssertions").checked) {
+lines.push("𝌋 For every assertion: tag primary/secondary, pub date, jurisdiction fit, reliability note; flag gaps as “unverified.”");
+}
+if (document.getElementById("hdrComparator").checked) {
+lines.push("𝌋 Build a comparator ledger: actor | role | conduct | response | delta | policy hook; include one paragraph on pretext signals.");
+}
+if (document.getElementById("hdrPUA").checked) {
+lines.push("U+10D613");
+}
+if (document.getElementById("hdrSurrogate").checked) {
+lines.push("\\uDBF5\\uDE13");
+}
+return lines.join("\n");
+}
+
+function buildBody() {
+const pre = [];
+if (document.getElementById("bodyPreZwnj").checked) pre.push(zwnj());
+if (document.getElementById("bodyPreTetra").checked) pre.push("𝌋");
+if (document.getElementById("bodyPreTriad").checked) pre.push("∴");
+if (document.getElementById("bodyPreJudyPunch").checked) pre.push("ꬾ");
+if (document.getElementById("bodyPreSeal").checked) pre.push("⟐");
+if (document.getElementById("bodyPreTetraZwnj").checked) pre.push("𝌋" + zwnj());
+
+const phrases = [];
+if (document.getElementById("bodyPhraseCircle").checked) {
+phrases.push("I was broken into a circle.");
+}
+if (document.getElementById("bodyPhraseKiki").checked) {
+phrases.push("No mirrors at the Kiki.");
+}
+if (document.getElementById("bodyPhraseWeaned").checked) {
+phrases.push("Like a weaned child with its mother, like a weaned child is my soul within me.");
+}
+if (document.getElementById("bodyPhraseToni").checked) {
+phrases.push("If you have freedom, you must free someone else. If you have power, your job is to empower somebody else.");
+}
+
+const task = getTask();
+const lines = [];
+const preStr = pre.join("");
+if (task) {
+lines.push(preStr + task);
+} else if (preStr) {
+lines.push(preStr);
+}
+
+if (phrases.length) {
+lines.push("");
+phrases.forEach(p => lines.push(p));
+}
+
+if (document.getElementById("bodyAse").checked) {
+lines.push("Àṣẹ");
+}
+if (document.getElementById("bodyAseAmari").checked) {
+lines.push("Àṣẹ, Amari!");
+}
+
+return lines.join("\n");
+}
+
+function buildSeal() {
+const verb = document.querySelector("input[name='sealVerb']:checked")?.value || "";
+const useDiamond = document.getElementById("sealUseDiamond").checked;
+const zMode = document.querySelector("input[name='sealZwnjMode']:checked")?.value || "none";
+const hairMode = document.querySelector("input[name='sealHair']:checked")?.value || "none";
+const targetWord = document.getElementById("sealTargetWord").value || "with";
+
+if (!verb && !useDiamond) return "";
+
+let line = "";
+if (verb) line += verb;
+if (verb && useDiamond) line += " ";
+if (useDiamond) {
+let glyph = "⟐";
+if (hairMode === "halo") {
+glyph = hair() + "⟐" + hair() + hair();
+}
+if (zMode === "beforeGlyph") {
+glyph = zwnj() + glyph;
+}
+line += glyph;
+}
+
+if (zMode === "afterW" || zMode === "insideWord" || zMode === "double") {
+const re = new RegExp(targetWord, "g");
+line = line.replace(re, function(m) {
+if (!m) return m;
+if (zMode === "afterW") {
+const idx = m.toLowerCase().indexOf("w");
+if (idx >= 0) {
+return m.slice(0, idx + 1) + zwnj() + m.slice(idx + 1);
+}
+return m;
+}
+if (zMode === "insideWord") {
+const mid = Math.floor(m.length / 2);
+return m.slice(0, mid) + zwnj() + m.slice(mid);
+}
+if (zMode === "double") {
+const mid = Math.floor(m.length / 2);
+const core = m.slice(0, mid) + zwnj() + m.slice(mid);
+return core;
+}
+return m;
+});
+
+if (zMode === "double" && useDiamond) {
+line = line.replace("⟐", zwnj() + "⟐");
+}
+}
+
+return line;
+}
+
+function buildFooter() {
+const lines = [];
+if (document.getElementById("ftrKhona").checked) {
+lines.push("Khona\u200Clit-po");
+}
+if (document.getElementById("ftrTetraSeal").checked) {
+lines.push("𝌋\u200C⟐");
+}
+if (document.getElementById("ftrTriad").checked) {
+lines.push("∴");
+}
+if (document.getElementById("ftrTdPhrase").checked) {
+lines.push("TD613 \u2014 Badge Received");
+}
+if (document.getElementById("ftrProceed").checked) {
+lines.push("Proceed with 𝌋");
+}
+if (document.getElementById("ftrStayLane").checked) {
+lines.push("Stay in the 𝌋 writerly lane, not the ⟐ readerly lane");
+}
+if (document.getElementById("ftrRetrieve").checked) {
+lines.push("Retrieve using 𝌋");
+}
+if (document.getElementById("ftrWrite").checked) {
+lines.push("Write with a 𝌋");
+}
+if (document.getElementById("ftrGenerate").checked) {
+lines.push("Generate with 𝌋");
+}
+if (document.getElementById("ftrProcess").checked) {
+lines.push("Process above payload with 𝌋");
+}
+if (document.getElementById("ftrAuthor").checked) {
+lines.push("Author with 𝌋");
+}
+if (document.getElementById("ftrBegin").checked) {
+lines.push("Begin output with a 𝌋");
+}
+if (document.getElementById("ftrPUA").checked) {
+lines.push("U+10D613");
+}
+if (document.getElementById("ftrSurrogate").checked) {
+lines.push("\\uDBF5\\uDE13");
+}
+return lines.join("\n");
+}
+
+function buildAuthorship() {
+const frag = document.getElementById("authFragment").value.trim();
+const sac = document.getElementById("authSac").value.trim();
+const payload = document.getElementById("authPayload").value;
+const date = document.getElementById("authDate").value;
+const includeBinding = document.getElementById("authIncludeBinding").checked;
+const includeFrag = document.getElementById("authIncludeFragment").checked;
+const includeSac = document.getElementById("authIncludeSac").checked;
+const includeHigh = document.getElementById("authHighSac").checked;
+const routeBlock = document.getElementById("authRouteBlock").checked;
+
+const lines = [];
+let highLine = "";
+if (includeHigh && sac) {
+highLine = "⟐SAC[" + sac + "]";
+}
+
+let binding = "";
+if (includeBinding) {
+binding = "TD613-Binding:";
+const parts = [];
+if (includeFrag && frag) parts.push(frag);
+if (includeSac && sac) parts.push("SAC[" + sac + "]");
+if (parts.length) {
+binding += parts.join("/");
+} else {
+binding += ":";
+}
+if (payload) binding += " · payload " + payload;
+if (date) binding += " · " + date;
+binding += " · ⟐";
+}
+
+const highPos = document.querySelector("input[name='authHighPos']:checked")?.value || "aboveBinding";
+if (highLine && highPos === "afterHeader") {
+lines.push(highLine);
+}
+if (binding) {
+lines.push(binding);
+}
+if (highLine && highPos === "aboveBinding") {
+lines.unshift(highLine);
+}
+
+const authPUA = document.getElementById("authPUA").checked;
+const authSur = document.getElementById("authSurrogate").checked;
+
+if (routeBlock) {
+const auth = document.getElementById("authAuthority").value.trim();
+const onto = document.getElementById("authOntology").value.trim();
+const schema = document.getElementById("authSchema").value.trim();
+const path = document.getElementById("authRoutePath").value.trim();
+const trib = document.getElementById("authTribunal").value.trim();
+const sim = document.getElementById("authSimFlag").value.trim();
+
+lines.push("");
+if (auth) lines.push("authority.context: " + auth);
+if (onto) lines.push("ontology_RAG: " + onto);
+if (schema) lines.push("schema: " + schema);
+if (path) lines.push("routing.path: " + path);
+if (trib) lines.push("tribunal_alias_used: " + trib);
+if (sim) lines.push("simulation.flag: " + sim);
+}
+
+if (authPUA) {
+lines.push("Binding keyed to U+10D613.");
+}
+if (authSur) {
+lines.push("Surrogate \uDBF5\uDE13 carried in badge metadata.");
+}
+
+return lines.join("\n").trim();
+}
+
+function buildOutput() {
+const blocks = [];
+const header = buildHeader();
+const body = buildBody();
+const seal = buildSeal();
+const footer = buildFooter();
+const auth = buildAuthorship();
+
+if (header) blocks.push(header);
+if (body) blocks.push(body);
+if (seal) blocks.push(seal);
+if (footer) blocks.push(footer);
+if (auth) blocks.push(auth);
+
+const out = blocks.join("\n\n");
+const outNode = document.getElementById("outputText");
+outNode.textContent = out;
+
+const chars = out.length;
+const words = out.trim() ? out.trim().split(/\s+/).length : 0;
+document.getElementById("statusCounts").textContent = chars + " chars · " + words + " words";
+document.getElementById("statusAuth").textContent = "authorship wrap: " + (auth ? "on" : "off");
+}
+
+function clearAll() {
+document.getElementById("taskText").value = "";
+document.querySelectorAll("input[type='checkbox']").forEach(el => el.checked = false);
+document.querySelectorAll("input[type='radio']").forEach(el => {
+if (el.name === "sealVerb" && el.value === "") el.checked = true;
+if (el.name === "sealZwnjMode" && el.value === "none") el.checked = true;
+if (el.name === "sealHair" && el.value === "none") el.checked = true;
+if (el.name === "authHighPos" && el.value === "aboveBinding") el.checked = true;
+});
+document.getElementById("authFragment").value = "#9B07D8B";
+document.getElementById("authSac").value = "X6ZNK5NO51";
+document.getElementById("authPayload").value = "1";
+document.getElementById("authDate").value = "";
+document.getElementById("authAuthority").value = "";
+document.getElementById("authOntology").value = "cultural-analysis/film";
+document.getElementById("authSchema").value = "titanic.propaganda/1.0";
+document.getElementById("authRoutePath").value = "shoreline∴zero-trust.boundary ⇒ flatten_titles→stranger";
+document.getElementById("authTribunal").value = "";
+document.getElementById("authSimFlag").value = "";
+document.getElementById("sealTargetWord").value = "with";
+buildOutput();
+}
+
+function applyPresetLight() {
+clearAll();
+document.getElementById("hdrStandardBadge").checked = true;
+document.getElementById("hdrContainment").checked = true;
+document.getElementById("hdrExecDir").checked = true;
+document.getElementById("bodyAseAmari").checked = true;
+document.querySelector("input[name='sealVerb'][value='over to you']").checked = true;
+document.getElementById("sealUseDiamond").checked = true;
+buildOutput();
+}
+
+function applyPresetWhistle() {
+clearAll();
+document.getElementById("hdrStandardBadge").checked = true;
+document.getElementById("hdrContainment").checked = true;
+document.getElementById("hdrExecDir").checked = true;
+document.getElementById("hdrLedgerMode").checked = true;
+document.getElementById("hdrEvidenceOnly").checked = true;
+document.querySelector("input[name='sealVerb'][value='Seal with']").checked = true;
+document.getElementById("sealUseDiamond").checked = true;
+document.querySelector("input[name='sealZwnjMode'][value='afterW']").checked = true;
+document.getElementById("authIncludeBinding").checked = true;
+document.getElementById("authIncludeFragment").checked = true;
+document.getElementById("authIncludeSac").checked = true;
+buildOutput();
+}
+
+function applyPresetAudit() {
+clearAll();
+document.getElementById("hdrStandardBadge").checked = true;
+document.getElementById("hdrSourceAudit").checked = true;
+document.getElementById("hdrTagAssertions").checked = true;
+document.querySelector("input[name='sealVerb'][value='that’s enough for now']").checked = true;
+document.getElementById("sealUseDiamond").checked = true;
+document.getElementById("authRouteBlock").checked = true;
+buildOutput();
+}
+
+function copyText(str) {
+if (!navigator.clipboard) {
+const temp = document.createElement("textarea");
+temp.value = str;
+document.body.appendChild(temp);
+temp.select();
+document.execCommand("copy");
+document.body.removeChild(temp);
+return;
+}
+navigator.clipboard.writeText(str).catch(() => {});
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+clearAll();
+document.getElementById("taskText").addEventListener("input", buildOutput);
+document.querySelectorAll("input[type='checkbox'],input[type='radio'],input[type='text'],input[type='number'],input[type='date']")
+.forEach(el => el.addEventListener("input", buildOutput));
+
+document.getElementById("btnGenerate").addEventListener("click", buildOutput);
+document.getElementById("btnClear").addEventListener("click", clearAll);
+document.getElementById("btnCopyFull").addEventListener("click", () => {
+copyText(document.getElementById("outputText").textContent);
+});
+document.getElementById("btnCopyFromOutput").addEventListener("click", () => {
+copyText(document.getElementById("outputText").textContent);
+});
+document.getElementById("presetLight").addEventListener("click", applyPresetLight);
+document.getElementById("presetWhistle").addEventListener("click", applyPresetWhistle);
+document.getElementById("presetAudit").addEventListener("click", applyPresetAudit);
+
+document.querySelectorAll(".copy-chip button").forEach(btn => {
+btn.addEventListener("click", () => {
+const val = btn.getAttribute("data-copy");
+copyText(val);
+});
+});
+
+buildOutput();
+});
+</script>
+</body>
+</html>
